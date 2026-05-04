@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e"/>
+      <stop offset="100%" style="stop-color:#16213e"/>
+    </linearGradient>
+    <linearGradient id="stroke_grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00d4ff"/>
+      <stop offset="100%" style="stop-color:#7b2ff7"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background rounded rect -->
+  <rect width="1024" height="1024" rx="220" ry="220" fill="url(#bg)"/>
+
+  <!-- Subtle grid lines -->
+  <g opacity="0.06" stroke="#00d4ff" stroke-width="1.5">
+    <line x1="0" y1="256" x2="1024" y2="256"/>
+    <line x1="0" y1="512" x2="1024" y2="512"/>
+    <line x1="0" y1="768" x2="1024" y2="768"/>
+    <line x1="256" y1="0" x2="256" y2="1024"/>
+    <line x1="512" y1="0" x2="512" y2="1024"/>
+    <line x1="768" y1="0" x2="768" y2="1024"/>
+  </g>
+
+  <!-- N letter - bold geometric strokes with gradient -->
+  <g filter="url(#glow)">
+    <!-- Left vertical bar -->
+    <rect x="210" y="220" width="110" height="584" rx="18" fill="url(#stroke_grad)"/>
+    <!-- Right vertical bar -->
+    <rect x="704" y="220" width="110" height="584" rx="18" fill="url(#stroke_grad)"/>
+    <!-- Diagonal stroke (top-left to bottom-right) -->
+    <polygon points="320,220 430,220 704,804 594,804" fill="url(#stroke_grad)"/>
+  </g>
+
+  <!-- Accent dot bottom-right -->
+  <circle cx="780" cy="820" r="28" fill="#00d4ff" opacity="0.85"/>
+</svg>

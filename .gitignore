@@ -1,0 +1,26 @@
+# Flutter
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+build/
+*.g.dart
+
+# Android
+android/.gradle/
+android/app/.cxx/
+android/local.properties
+*.keystore
+*.jks
+
+# FreeRDP build artifacts (large, not needed in repo)
+freerdp_build/
+freerdp_src/
+android_openssl/
+openssl-3.3.2/
+openssl-3.3.2.tar.gz
+ndk_linux/
+
+# IDE
+.idea/
+*.iml
+.vscode/
