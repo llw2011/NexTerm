@@ -1,0 +1,2 @@
+-keep interface com.nexterm.nexterm.RdpBridge$ClipboardCallback { *; }
+-keep class * implements com.nexterm.nexterm.RdpBridge$ClipboardCallback { *; }
