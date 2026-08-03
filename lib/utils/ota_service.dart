@@ -7,13 +7,29 @@ import 'package:path_provider/path_provider.dart';
 
 // TODO: 替换为你的 GitHub 仓库
 const _repoOwner = 'llw2011';
-const _repoName  = 'NexTerm';
+const _repoName = 'NexTerm';
+const _githubHeaders = {
+  'Accept': 'application/vnd.github+json',
+  'User-Agent': 'NexTerm-OTA',
+  'X-GitHub-Api-Version': '2022-11-28',
+};
+
+class OtaException implements Exception {
+  final String message;
+  const OtaException(this.message);
+
+  @override
+  String toString() => message;
+}
 
 class ReleaseInfo {
   final String version;
   final String downloadUrl;
   final String releaseNotes;
-  const ReleaseInfo({required this.version, required this.downloadUrl, required this.releaseNotes});
+  const ReleaseInfo(
+      {required this.version,
+      required this.downloadUrl,
+      required this.releaseNotes});
 }
 
 class OtaService {
@@ -24,15 +40,20 @@ class OtaService {
     final info = await PackageInfo.fromPlatform();
     final current = info.version; // e.g. "1.0.0"
 
-    final resp = await http.get(
-      Uri.parse('https://api.github.com/repos/$_repoOwner/$_repoName/releases/latest'),
-      headers: {'Accept': 'application/vnd.github+json'},
-    ).timeout(const Duration(seconds: 10));
+    final resp = await http
+        .get(
+          Uri.parse(
+              'https://api.github.com/repos/$_repoOwner/$_repoName/releases/latest'),
+          headers: _githubHeaders,
+        )
+        .timeout(const Duration(seconds: 10));
 
-    if (resp.statusCode != 200) return null;
+    if (resp.statusCode != 200) {
+      throw OtaException('GitHub latest API returned HTTP ${resp.statusCode}');
+    }
 
     final json = jsonDecode(resp.body) as Map<String, dynamic>;
-    final tag  = (json['tag_name'] as String).replaceFirst('v', '');
+    final tag = (json['tag_name'] as String).replaceFirst('v', '');
     final body = json['body'] as String? ?? '';
 
     if (!_isNewer(tag, current)) return null;
@@ -43,7 +64,9 @@ class OtaService {
       (a) => (a['name'] as String).endsWith('.apk'),
       orElse: () => null,
     );
-    if (apkAsset == null) return null;
+    if (apkAsset == null) {
+      throw OtaException('Release v$tag does not contain an APK asset');
+    }
 
     return ReleaseInfo(
       version: tag,
@@ -57,11 +80,17 @@ class OtaService {
     ReleaseInfo release, {
     void Function(double progress)? onProgress,
   }) async {
-    final dir  = await getExternalCacheDirectories();
-    final file = File('${dir!.first.path}/nexterm-update.apk');
+    final dir = await getTemporaryDirectory();
+    final safeVersion =
+        release.version.replaceAll(RegExp(r'[^0-9A-Za-z._-]'), '_');
+    final file = File('${dir.path}/nexterm-$safeVersion.apk');
 
-    final req  = http.Request('GET', Uri.parse(release.downloadUrl));
+    final req = http.Request('GET', Uri.parse(release.downloadUrl))
+      ..headers.addAll({'User-Agent': 'NexTerm-OTA'});
     final resp = await req.send();
+    if (resp.statusCode < 200 || resp.statusCode >= 300) {
+      throw OtaException('APK download returned HTTP ${resp.statusCode}');
+    }
     final total = resp.contentLength ?? 0;
     int received = 0;
 
@@ -78,8 +107,10 @@ class OtaService {
   }
 
   static bool _isNewer(String remote, String local) {
+    // Strip build suffix like "+39" from local version
+    final cleanLocal = local.replaceAll(RegExp(r'\+\d+$'), '');
     final r = remote.split('.').map(int.tryParse).toList();
-    final l = local.split('.').map(int.tryParse).toList();
+    final l = cleanLocal.split('.').map(int.tryParse).toList();
     for (int i = 0; i < 3; i++) {
       final rv = i < r.length ? (r[i] ?? 0) : 0;
       final lv = i < l.length ? (l[i] ?? 0) : 0;
