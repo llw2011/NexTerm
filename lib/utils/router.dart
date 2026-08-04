@@ -1,8 +1,10 @@
+import 'dart:io';
 import 'package:go_router/go_router.dart';
 import '../models/connection.dart';
 import '../screens/home/home_screen.dart';
 import '../screens/home/edit_connection_screen.dart';
 import '../screens/rdp/rdp_screen.dart';
+import '../screens/rdp/rdp_screen_windows.dart';
 import '../screens/ssh/ssh_screen.dart';
 import '../screens/settings/settings_screen.dart';
 
@@ -31,7 +33,9 @@ final router = GoRouter(
     ),
     GoRoute(
       path: '/rdp',
-      builder: (ctx, state) => RdpScreen(connection: state.extra as Connection),
+      builder: (ctx, state) => Platform.isWindows
+          ? RdpScreenWindows(connection: state.extra as Connection)
+          : RdpScreen(connection: state.extra as Connection),
     ),
     GoRoute(
       path: '/ssh',
