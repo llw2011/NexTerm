@@ -3,12 +3,14 @@
 .flutter-plugins
 .flutter-plugins-dependencies
 build/
+dist/
 *.g.dart
 
 # Android
 android/.gradle/
 android/app/.cxx/
 android/local.properties
+android/key.properties
 *.keystore
 *.jks
 
@@ -20,7 +22,38 @@ openssl-3.3.2/
 openssl-3.3.2.tar.gz
 ndk_linux/
 
+# CMake-produced JNI library — must come from externalNativeBuild only.
+# A predef copy here would override the fresh CMake output at merge time
+# and ship stale native code in the APK (see AGENTS.md §5.2).
+android/app/src/main/jniLibs/arm64-v8a/libnexterm_jni.so
+android/app/src/main/jniLibs/x86_64/libnexterm_jni.so
+
+# Windows Flutter/CMake generated output
+windows/flutter/ephemeral/
+windows/native/build/
+
+# Throwaway/generated test app from local Windows experiments
+test_windows/
+
 # IDE
 .idea/
 *.iml
 .vscode/
+
+# Local-only maintenance, release tooling, and private work notes
+AGENTS.md
+WORK_DIARY*.md
+docs/AUDIT_*.md
+docs/FEATURE_ENHANCEMENT_ROADMAP.md
+docs/NEXTERM_DEVELOPMENT_SPEC.md
+docs/PROJECT_RECOVERY_BASELINE.md
+docs/RDP_INPUT_UX_REWORK_PLAN.md
+docs/WINDOWS_RDP_MANAGER_PRODUCTION_PLAN.md
+scripts/build_android_libs.ps1
+scripts/build_freerdp_android.sh
+scripts/installer.iss
+scripts/publish_ota.ps1
+windows_native/build-rdphost.ps1
+windows_native/README.md
+android/app/*.full
+android/*.bak
