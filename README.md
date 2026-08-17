@@ -14,6 +14,21 @@ The current source version is `1.0.72+73`.
 - A separate WinForms/MSTSCAX host experiment under `windows_native/`.
 - GitHub Releases OTA checks with fail-open handling for release-service outages.
 
+## Screenshots
+
+<table>
+  <tr>
+    <td><img src="docs/images/connections.png" alt="NexTerm connection library" width="270"></td>
+    <td><img src="docs/images/rdp-editor.png" alt="NexTerm RDP connection editor" width="270"></td>
+    <td><img src="docs/images/settings.png" alt="NexTerm settings and security options" width="270"></td>
+  </tr>
+  <tr>
+    <td align="center"><strong>Connection library</strong></td>
+    <td align="center"><strong>RDP profile</strong></td>
+    <td align="center"><strong>Settings and security</strong></td>
+  </tr>
+</table>
+
 ## Source Map
 
 ```text
