@@ -18,9 +18,9 @@ The current source version is `1.0.72+73`.
 
 <table>
   <tr>
-    <td><img src="docs/images/connections.png" alt="NexTerm connection library" width="270"></td>
-    <td><img src="docs/images/rdp-editor.png" alt="NexTerm RDP connection editor" width="270"></td>
-    <td><img src="docs/images/settings.png" alt="NexTerm settings and security options" width="270"></td>
+    <td><a href="https://raw.githubusercontent.com/llw2011/NexTerm/main/docs/images/connections.png"><img src="https://raw.githubusercontent.com/llw2011/NexTerm/main/docs/images/connections.png" alt="NexTerm connection library" width="270"></a></td>
+    <td><a href="https://raw.githubusercontent.com/llw2011/NexTerm/main/docs/images/rdp-editor.png"><img src="https://raw.githubusercontent.com/llw2011/NexTerm/main/docs/images/rdp-editor.png" alt="NexTerm RDP connection editor" width="270"></a></td>
+    <td><a href="https://raw.githubusercontent.com/llw2011/NexTerm/main/docs/images/settings.png"><img src="https://raw.githubusercontent.com/llw2011/NexTerm/main/docs/images/settings.png" alt="NexTerm settings and security options" width="270"></a></td>
   </tr>
   <tr>
     <td align="center"><strong>Connection library</strong></td>
