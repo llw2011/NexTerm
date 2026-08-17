@@ -344,25 +344,30 @@ class _EditConnectionScreenState extends State<EditConnectionScreen> {
               prefixIcon: Icon(Icons.security),
               contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             ),
-            items: const [
+            items: [
               DropdownMenuItem(
-                  value: RdpSecurityProtocol.auto, child: Text('自动 (默认)')),
+                  value: RdpSecurityProtocol.auto,
+                  child: Text(l10n.t('rdpSecurityAuto'))),
               DropdownMenuItem(
-                  value: RdpSecurityProtocol.rdp, child: Text('RDP (旧协议)')),
+                  value: RdpSecurityProtocol.rdp,
+                  child: Text(l10n.t('rdpSecurityRdp'))),
               DropdownMenuItem(
-                  value: RdpSecurityProtocol.nla, child: Text('NLA')),
+                  value: RdpSecurityProtocol.nla,
+                  child: Text(l10n.t('rdpSecurityNla'))),
               DropdownMenuItem(
-                  value: RdpSecurityProtocol.tls, child: Text('TLS')),
+                  value: RdpSecurityProtocol.tls,
+                  child: Text(l10n.t('rdpSecurityTls'))),
               DropdownMenuItem(
-                  value: RdpSecurityProtocol.ext, child: Text('扩展')),
+                  value: RdpSecurityProtocol.ext,
+                  child: Text(l10n.t('rdpSecurityExt'))),
             ],
             onChanged: (v) =>
                 setState(() => _rdpSecurity = v ?? RdpSecurityProtocol.auto),
           ),
           const SizedBox(height: 4),
-          const Text(
-            '连接失败时尝试更换协议',
-            style: TextStyle(color: Colors.white38, fontSize: 11),
+          Text(
+            l10n.t('rdpSecurityCompatibilityHint'),
+            style: const TextStyle(color: Colors.white38, fontSize: 11),
           ),
         ],
       );
